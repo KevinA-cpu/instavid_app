@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useState, useEffect } from "react";
-import Navbar from "../../components/Navbar";
-import Sidebar from "../../components/Sidebar";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const App = ({ Component, pageProps }: AppProps) => {
   //Server Side Rendering at start
