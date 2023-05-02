@@ -1,8 +1,12 @@
-interface PostedBy {
-  name: string
-  title: string
-  type: 'reference'
-  to: {
-    type: string
-  }[]
+const postedBy = {
+  name: 'postedBy',
+  title: 'PostedBy',
+  type: 'reference',
+  to: [
+    {
+      type: 'user',
+    },
+  ],
 }
+
+export default postedBy

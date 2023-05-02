@@ -1,16 +1,4 @@
-interface Comment {
-  name: string
-  title: string
-  type: 'document'
-  fields: {
-    name: string
-    title: string
-    type: string
-    validation?: (Rule: any) => any
-  }[]
-}
-
-const comment: Comment = {
+const comment = {
   name: 'comment',
   title: 'Comment',
   type: 'document',
@@ -19,13 +7,13 @@ const comment: Comment = {
       name: 'postedBy',
       title: 'Posted By',
       type: 'postedBy',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'comment',
       title: 'Comment',
       type: 'string',
-      validation: (Rule) => Rule.uri(),
+      validation: (Rule: any) => Rule.required(),
     },
   ],
 }

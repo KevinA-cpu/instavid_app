@@ -1,16 +1,4 @@
-interface User {
-  name: string
-  title: string
-  type: 'document'
-  fields: {
-    name: string
-    title: string
-    type: string
-    validation?: (Rule: any) => any
-  }[]
-}
-
-const user: User = {
+const user = {
   name: 'user',
   title: 'User',
   type: 'document',
@@ -19,13 +7,13 @@ const user: User = {
       name: 'userName',
       title: 'User Name',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'image',
       title: 'Image',
       type: 'string',
-      validation: (Rule) => Rule.uri(),
+      validation: (Rule: any) => Rule.uri(),
     },
   ],
 }
