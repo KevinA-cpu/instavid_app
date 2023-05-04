@@ -19,13 +19,13 @@ const Sidebar = () => {
   return (
     <div>
       <div
-        className="block xl:hidden m-2 ml-4 mt-3 text-xl"
+        className="block xl:hidden m-2 ml-4 mt-3 text-xl cursor-pointer"
         onClick={() => setShowSideBar((prev) => !prev)}
       >
         {showSideBar ? <ImCancelCircle /> : <AiOutlineMenu />}
       </div>
       {showSideBar && (
-        <div className="xl:w-400 xl:border-0 p-3 w-30 flex flex-col justify-start mb-10 border-r-2 border-gray-100">
+        <div className="xl:w-[400px] xl:border-0 p-3 w-20 flex flex-col justify-start mb-10 border-r-2 border-gray-100">
           <div className="xl:border-b-2 border-gray-200 xl:pb-4">
             <Link href="/">
               <div className={normalLink}>

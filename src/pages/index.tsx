@@ -1,10 +1,31 @@
 import Image from "next/image";
+import axios from "axios";
+import { Video } from "../../types";
+import VideoCard from "../components/VideoCard";
+import NoResults from "@/components/NoResults";
 
-export default function Home() {
+interface IProps {
+  videos: Video[];
+}
+
+export default function Home({ videos }: IProps) {
   return (
-    <h1 className="text-3xl">
-      Next.js + TypeScript + Tailwind CSS + ESLint + Prettier + Jest + React
-      Testing Library + Cypress
-    </h1>
+    <div className="flex flex-col gap-10 videos h-full">
+      {videos.length ? (
+        videos.map((video: Video) => <VideoCard post={video} key={video._id} />)
+      ) : (
+        <NoResults text={"No videos can be found."} />
+      )}
+    </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const { data } = await axios.get("http://localhost:3000/api/posts");
+
+  return {
+    props: {
+      videos: data,
+    },
+  };
+};
