@@ -13,8 +13,13 @@ const Discover = () => {
       <div className="flex flex-wrap gap-3">
         {topics.map((topic) => (
           <Link href={`/?topic=${topic.name}`} key={topic.name}>
-            <div className="bg-gray-100 rounded-full px-4 py-2 text-sm font-semibold text-gray-500 cursor-pointer hover:bg-gray-200">
-              <span>{topic.icon}</span>
+            <div className="flex flex-wrap gap-2 bg-gray-100 rounded-full px-4 py-2 text-gray-500 cursor-pointer hover:bg-gray-200">
+              <span className="font-bold text-2xl xl:text-md">
+                {topic.icon}
+              </span>
+              <span className="font-medium text-md hidden xl:block capitalize">
+                {topic.name}
+              </span>
             </div>
           </Link>
         ))}
