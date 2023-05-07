@@ -11,7 +11,6 @@ interface IProps {
 }
 
 const VideoCard: NextPage<IProps> = ({ post }) => {
-  const [isHover, setIsHover] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const vieoRef = useRef<HTMLVideoElement>(null);
@@ -70,48 +69,40 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
       </div>
 
       <div className="lg:ml-20 flex gap-4 relative">
-        <div
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-          className="rounded-3xl"
-        >
+        <div className="rounded-3xl flex flex-col items-center bg-gray-200">
           <Link href="/">
             <video
               loop
               ref={vieoRef}
-              className="lg:w-[600px] lg:h-[530px] md:h-[500px] md:w-[600px] h-[400px] w-[425px] rounded-2xl cursor-pointer bg-gray-200"
+              className="lg:w-[600px] lg:h-[530px]  md:h-[500px] md:w-[600px] h-[400px] w-[425px] rounded-2xl cursor-pointer"
               src={post.video.asset.url}
             ></video>
           </Link>
-          {isHover && (
-            <div
-              className="absolute bottom-6 cursor-pointer left-3 gap-5 md:left-[3rem] flex
-            lg:left-6 lg:justify-between w-[70px] md:w-[100px]"
-            >
-              {isPlaying ? (
-                <BsFillPauseFill
-                  onClick={handlePlay}
-                  className="text-black text-2xl lg:text-4xl"
-                />
-              ) : (
-                <BsFillPlayFill
-                  onClick={handlePlay}
-                  className="text-black text-2xl lg:text-4xl"
-                />
-              )}
-              {isMuted ? (
-                <HiVolumeOff
-                  onClick={handleMute}
-                  className="text-black text-2xl lg:text-4xl"
-                />
-              ) : (
-                <HiVolumeUp
-                  onClick={handleMute}
-                  className="text-black text-2xl lg:text-4xl"
-                />
-              )}
-            </div>
-          )}
+
+          <div className="flex items-center cursor-pointer gap-5 my-2 w-[70px] md:w-[100px] lg:justify-between">
+            {isPlaying ? (
+              <BsFillPauseFill
+                onClick={handlePlay}
+                className="text-black text-2xl lg:text-4xl md:text-3xl"
+              />
+            ) : (
+              <BsFillPlayFill
+                onClick={handlePlay}
+                className="text-black text-2xl lg:text-4xl md:text-3xl"
+              />
+            )}
+            {isMuted ? (
+              <HiVolumeOff
+                onClick={handleMute}
+                className="text-black text-2xl lg:text-4xl md:text-3xl"
+              />
+            ) : (
+              <HiVolumeUp
+                onClick={handleMute}
+                className="text-black text-2xl lg:text-4xl md:text-3xl"
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
