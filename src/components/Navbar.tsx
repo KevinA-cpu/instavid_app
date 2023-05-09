@@ -8,9 +8,13 @@ import { BiSearch } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import Logo from "../../utils/InstaVid.png";
 import { createOrGetUser } from "../../utils";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { AuthState } from "../../store/authStore";
+import { addUser } from "../../store/authStore";
 
 const Navbar = () => {
-  const user = false;
+  const { userProfile } = useSelector((state: AuthState) => state);
+  const dispatch = useDispatch();
   return (
     <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
       <Link href="/">
@@ -26,12 +30,12 @@ const Navbar = () => {
 
       <div>SEARCH BAR</div>
       <div>
-        {user ? (
-          <div> logged in </div>
+        {userProfile ? (
+          <div> {userProfile.userName} </div>
         ) : (
           <GoogleLogin
             onSuccess={(response) => {
-              createOrGetUser(response);
+              createOrGetUser(response, addUser, dispatch);
             }}
             onError={() => {}}
             width="300"

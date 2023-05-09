@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ["yt3.ggpht.com"],
   },
+  transpilePackages: ["react-redux", "redux-persist"],
 };
 
 module.exports = nextConfig;
