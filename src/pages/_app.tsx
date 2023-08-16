@@ -32,11 +32,11 @@ const Loading = () => {
 
   useEffect(() => {
     if (screenWidth <= 800) {
-      setProgressSize(60);
+      setProgressSize(50);
     } else if (screenWidth <= 1200) {
-      setProgressSize(70);
+      setProgressSize(60);
     } else {
-      setProgressSize(80);
+      setProgressSize(70);
     }
   }, [screenWidth]);
 
@@ -57,9 +57,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   //Client Side Rendering when React mounts
   useEffect(() => {
-    setTimeout(() => {
-      setIsSSR(false);
-    }, 2000);
+    setIsSSR(false);
   }, []);
 
   //If isSSR is true, return null
