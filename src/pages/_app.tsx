@@ -32,11 +32,11 @@ const Loading = () => {
 
   useEffect(() => {
     if (screenWidth <= 800) {
-      setProgressSize(80);
+      setProgressSize(60);
     } else if (screenWidth <= 1200) {
-      setProgressSize(90);
+      setProgressSize(70);
     } else {
-      setProgressSize(100);
+      setProgressSize(80);
     }
   }, [screenWidth]);
 
@@ -76,7 +76,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <div className="h-[92vh] overflow-hidden xl:hover:overflow-auto">
               <Sidebar />
             </div>
-            <div className="flex flex-1 flex-col gap-10 overflow-auto h-[88vh] mt-4 videos">
+            <div className="flex flex-1 flex-col gap-10 overflow-auto h-[88vh] mt-4">
               <Component {...pageProps} />
             </div>
           </div>

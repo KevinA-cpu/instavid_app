@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Video } from "../../types";
-import { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
-import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { GoVerified } from "react-icons/go";
+import React, { useState, useEffect, useRef } from 'react';
+import { Video } from '../../types';
+import { NextPage } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
+import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
+import { GoVerified } from 'react-icons/go';
 
 interface IProps {
   post: Video;
@@ -53,16 +53,16 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
                   className="rounded-full"
                   src={post.postedBy.image}
                   alt="ProfilePicture"
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: '100%', height: '100%' }}
                 />
               </>
             </Link>
           </div>
           <div>
             <Link href="/">
-              <p className="flex gap-2 items-center md:text-md font-bold text-primary">
-                {post.postedBy.userName}{" "}
-                <GoVerified className="text-blue-500 text-md" />
+              <p className="flex gap-2 items-center md:text-lg font-bold text-primary">
+                {post.postedBy.userName}{' '}
+                <GoVerified className="text-blue-500 text-lg" />
               </p>
             </Link>
           </div>

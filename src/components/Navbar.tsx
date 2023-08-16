@@ -10,15 +10,15 @@ import Logo from '../../utils/InstaVid.png';
 import { createOrGetUser } from '../../utils';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { AuthState } from '../../store/authStore';
-import { addUser } from '../../store/authStore';
+import { addUser, removeUser } from '../../store/authStore';
 
 const Navbar = () => {
   const { userProfile } = useSelector((state: AuthState) => state);
   const dispatch = useDispatch();
   return (
-    <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
+    <div className="flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
       <Link href="/">
-        <div className="w-[50px] md:w-[70px]">
+        <div className="w-[60px] md:w-[60px]">
           <Image
             src={Logo}
             alt="Logo"
@@ -31,7 +31,37 @@ const Navbar = () => {
       <div>SEARCH BAR</div>
       <div>
         {userProfile ? (
-          <div> {userProfile.userName} </div>
+          <div className="flex items-center gap-5 ">
+            <Link href="/upload">
+              <button className="border-2 px-2 md:px-4 text-lg font-semibold flex items-center gap-2">
+                <IoMdAdd className="text-xl" />{' '}
+                <span className="hidden md:block">Upload</span>
+              </button>
+            </Link>
+            {userProfile.image && (
+              <Link href="/">
+                <>
+                  <Image
+                    width={40}
+                    height={40}
+                    className="rounded-full cursor-pointer"
+                    src={userProfile.image}
+                    alt="ProfilePicture"
+                  />
+                </>
+              </Link>
+            )}
+            <button
+              type="button"
+              className="px-2"
+              onClick={() => {
+                googleLogout();
+                dispatch(removeUser());
+              }}
+            >
+              <AiOutlineLogout color="red" fontSize={21} />
+            </button>
+          </div>
         ) : (
           <GoogleLogin
             onSuccess={(response) => {
