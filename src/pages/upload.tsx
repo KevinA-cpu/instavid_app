@@ -6,6 +6,8 @@ import axios from 'axios';
 import { SanityAssetDocument } from '@sanity/client';
 import { client } from '../../utils/client';
 import { topics } from '../../utils/constants';
+import { useSelector } from 'react-redux/es/exports';
+import { AuthState } from '../../store/authStore';
 
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,12 +15,18 @@ const Upload = () => {
     SanityAssetDocument | undefined
   >();
   const [wrongFileType, setWrongFileType] = useState(false);
+  const [caption, setCaption] = useState('');
+  const [category, setCategory] = useState(topics[0].name);
+  const [savingPost, setSavingPost] = useState(false);
+  const { userProfile } = useSelector((state: AuthState) => state);
+  const router = useRouter();
   const uploadVideo = async (e: any) => {
     setIsLoading(true);
+    setWrongFileType(false);
     const file = e.target.files[0];
     const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
 
-    if (fileTypes.includes(file.type)) {
+    if (fileTypes.includes(file?.type)) {
       client.assets
         .upload('file', file, {
           contentType: file.type,
@@ -34,6 +42,31 @@ const Upload = () => {
     }
   };
 
+  const handlePost = async () => {
+    if (caption && videoAsset?._id && category) {
+      setSavingPost(true);
+      const document = {
+        _type: 'post',
+        caption,
+        video: {
+          _type: 'file',
+          asset: {
+            _type: 'reference',
+            _ref: videoAsset._id,
+          },
+        },
+        userId: userProfile?._id,
+        postedBy: {
+          _type: 'postedBy',
+          _ref: userProfile?._id,
+        },
+        topic: category,
+      };
+      await axios.post('http://localhost:3000/api/posts', document);
+      router.push('/');
+    }
+  };
+
   return (
     <div className="flex h-full w-full absolute left-0 top-[78px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center">
       <div className="bg-white rounded-lg xl:h-[80vh] w-[60%] flex gap-6 flex-wrap justify-between items-center p-14 pt-6">
@@ -44,7 +77,7 @@ const Upload = () => {
               Post a video to your account
             </p>
           </div>
-          <div className="border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[520px] h-[460px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
+          <div className="border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[600px] h-[460px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
             {isLoading ? (
               <p className="text-lg text-gray-400">Uploading...</p>
             ) : (
@@ -98,14 +131,14 @@ const Upload = () => {
           <label className="text-lg font-medium">Caption</label>
           <input
             type="text"
-            value=""
-            onChange={() => {}}
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
             className="rounded outline-none text-lg border-2 border-gray-200 p-2"
           />
           <label className="text-lg font-medium">Choose a Category</label>
           <select
             className="outline-none border-2 border-gray-200 text-lg capitalize lg:p-4 p-2 rounded cursor-pointer"
-            onChange={() => {}}
+            onChange={(e) => setCategory(e.target.value)}
           >
             {topics.map((topic) => (
               <option
@@ -126,7 +159,7 @@ const Upload = () => {
               Discard
             </button>
             <button
-              onClick={() => {}}
+              onClick={handlePost}
               type="button"
               className="bg-[#E62725] text-white text-lg font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >

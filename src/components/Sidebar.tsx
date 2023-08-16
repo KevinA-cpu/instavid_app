@@ -36,20 +36,7 @@ const Sidebar = () => {
               </div>
             </Link>
           </div>
-          {!userProfile && (
-            <div className="px-2 pt-4 pb-2 hidden xl:block">
-              <p className="text-gray-400">
-                log in to like and comment on videos.
-              </p>
-              <div className="pr-4 pt-4">
-                <GoogleLogin
-                  onSuccess={() => {}}
-                  onError={() => {}}
-                  width={300}
-                />
-              </div>
-            </div>
-          )}
+
           <Discover />
           <SuggestedAccounts />
           <SidebarFooter />
