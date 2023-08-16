@@ -1,19 +1,19 @@
-import "@/styles/globals.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import '@/styles/globals.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
-import type { AppProps } from "next/app";
-import { useState, useEffect } from "react";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { Provider } from "react-redux";
-import { store, persistor } from "../../store/authStore";
-import { PersistGate } from "redux-persist/integration/react";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import { CircularProgress } from "@mui/material";
-import styled from "@emotion/styled";
+import type { AppProps } from 'next/app';
+import { useState, useEffect } from 'react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Provider } from 'react-redux';
+import { store, persistor } from '../../store/authStore';
+import { PersistGate } from 'redux-persist/integration/react';
+import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
+import { CircularProgress } from '@mui/material';
+import styled from '@emotion/styled';
 
 const Loading = () => {
   const [progressSize, setProgressSize] = useState(80);
@@ -23,10 +23,10 @@ const Loading = () => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     handleResize();
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [screenWidth]);
 
@@ -43,7 +43,7 @@ const Loading = () => {
   return (
     <div className="flex flex-col justify-center items-center text-center h-screen w-screen">
       <CircularProgress
-        style={{ color: "red" }}
+        style={{ color: 'red' }}
         size={progressSize}
         className="mt-5"
       />
@@ -67,7 +67,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <GoogleOAuthProvider
-      clientId={`${process.env.NEXT_PUBLIC_GOOGLEAPI_TOKEN}`}
+      clientId={process.env.NEXT_PUBLIC_GOOGLEAPI_TOKEN as string}
     >
       <Provider store={store}>
         <PersistGate persistor={persistor}>

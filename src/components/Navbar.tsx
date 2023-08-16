@@ -1,16 +1,16 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
-import { AiOutlineLogout } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
-import { IoMdAdd } from "react-icons/io";
-import Logo from "../../utils/InstaVid.png";
-import { createOrGetUser } from "../../utils";
-import { useSelector, useDispatch } from "react-redux/es/exports";
-import { AuthState } from "../../store/authStore";
-import { addUser } from "../../store/authStore";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { BiSearch } from 'react-icons/bi';
+import { IoMdAdd } from 'react-icons/io';
+import Logo from '../../utils/InstaVid.png';
+import { createOrGetUser } from '../../utils';
+import { useSelector, useDispatch } from 'react-redux/es/exports';
+import { AuthState } from '../../store/authStore';
+import { addUser } from '../../store/authStore';
 
 const Navbar = () => {
   const { userProfile } = useSelector((state: AuthState) => state);
@@ -22,7 +22,7 @@ const Navbar = () => {
           <Image
             src={Logo}
             alt="Logo"
-            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             priority
           />
         </div>
@@ -38,7 +38,7 @@ const Navbar = () => {
               createOrGetUser(response, addUser, dispatch);
             }}
             onError={() => {}}
-            width="300"
+            width={300}
           />
         )}
       </div>
