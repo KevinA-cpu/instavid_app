@@ -13,7 +13,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { CircularProgress } from '@mui/material';
-import styled from '@emotion/styled';
 
 const Loading = () => {
   const [progressSize, setProgressSize] = useState(80);
@@ -69,13 +68,15 @@ const App = ({ Component, pageProps }: AppProps) => {
     >
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <Navbar />
-          <div className="flex gap-6 md:gap-20">
-            <div className="h-[92vh] overflow-hidden xl:hover:overflow-auto">
-              <Sidebar />
-            </div>
-            <div className="flex flex-1 flex-col gap-10 overflow-auto h-[88vh] mt-4">
-              <Component {...pageProps} />
+          <div className="xl:w-[1200px] m-auto overflow-hidden h-[100vh]">
+            <Navbar />
+            <div className="flex gap-6 md:gap-20">
+              <div className="h-[92vh] overflow-hidden xl:hover:overflow-auto">
+                <Sidebar />
+              </div>
+              <div className="flex flex-1 flex-col gap-10 overflow-auto h-[88vh] mt-4">
+                <Component {...pageProps} />
+              </div>
             </div>
           </div>
         </PersistGate>
