@@ -9,7 +9,7 @@ import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import axios from 'axios';
 import { BASE_URL } from '../../../utils';
 import { Video } from '../../../types';
-import { useSelector, useDispatch } from 'react-redux/es/exports';
+import { useSelector } from 'react-redux/es/exports';
 import { AuthState } from '../../../store/authStore';
 import LikeButton from '@/components/LikeButton';
 import Comments from '@/components/Comments';
@@ -18,6 +18,8 @@ const Detail = ({ postDetails }: { postDetails: Video }) => {
   const [post, setPost] = useState(postDetails);
   const [playing, setPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [comment, setComment] = useState('');
+  const [isPostingComment, setIsPostingComment] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const { userProfile } = useSelector((state: AuthState) => state);
@@ -41,6 +43,42 @@ const Detail = ({ postDetails }: { postDetails: Video }) => {
       }
     }
   };
+
+  const handleLike = async (like: boolean) => {
+    if (userProfile) {
+      const { data } = await axios.put(`${BASE_URL}/api/like`, {
+        userId: userProfile._id,
+        postId: post._id,
+        like,
+      });
+
+      setPost({
+        ...post,
+        likes: data.likes,
+      });
+    }
+  };
+
+  const addComment = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    setIsPostingComment(true);
+    if (userProfile && comment) {
+      const { data } = await axios.post(`${BASE_URL}/api/post/${post._id}`, {
+        userId: userProfile._id,
+        comment,
+      });
+
+      setPost({
+        ...post,
+        comments: data.comments,
+      });
+      setComment('');
+      setIsPostingComment(false);
+    }
+  };
+
   return (
     <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
       <div className="relative flex-1 w-[1000px] lg:w-9/12 flex justify-center items-center bg-black">
@@ -117,8 +155,22 @@ const Detail = ({ postDetails }: { postDetails: Video }) => {
 
           <p className="px-6 text-lg text-gray-600">{post.caption}</p>
 
-          <div className="mt-10 px-10">{userProfile && <LikeButton />}</div>
-          <Comments />
+          <div className="mt-10 px-10">
+            {userProfile && (
+              <LikeButton
+                likes={post.likes}
+                handleLike={() => handleLike(true)}
+                handleDislike={() => handleLike(false)}
+              />
+            )}
+          </div>
+          <Comments
+            comment={comment}
+            comments={post.comments}
+            setComment={setComment}
+            addComment={addComment}
+            isPostingComment={isPostingComment}
+          />
         </div>
       </div>
     </div>
