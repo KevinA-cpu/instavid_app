@@ -12,33 +12,27 @@ interface IProps {
 }
 
 const VideoCard: NextPage<IProps> = ({ post }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const vieoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlay = () => {
-    if (vieoRef.current) {
-      if (isPlaying) {
-        vieoRef.current.pause();
-        setIsPlaying(false);
+    if (videoRef.current) {
+      if (playing) {
+        videoRef.current.pause();
+        setPlaying(false);
       } else {
-        vieoRef.current.play();
-        setIsPlaying(true);
+        videoRef.current.play();
+        setPlaying(true);
       }
     }
   };
 
-  const handleMute = () => {
-    if (vieoRef.current) {
-      if (isMuted) {
-        vieoRef.current.muted = false;
-        setIsMuted(vieoRef.current.muted);
-      } else {
-        vieoRef.current.muted = true;
-        setIsMuted(vieoRef.current.muted);
-      }
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
     }
-  };
+  }, [isMuted]);
 
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
@@ -60,10 +54,15 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
           </div>
           <div>
             <Link href="/">
-              <p className="flex gap-2 items-center md:text-lg font-bold text-primary">
-                {post.postedBy.userName}{' '}
-                <GoVerified className="text-blue-500 text-lg" />
-              </p>
+              <div className="flex flex-col gap-2">
+                <p className="flex gap-2 items-center md:text-lg font-bold text-primary">
+                  {post.postedBy.userName}{' '}
+                  <GoVerified className="text-blue-500 text-lg" />
+                </p>
+                <p className="-mt-1 capitalize font-medium text-xs text-gray-500 hidden md:block">
+                  {post.postedBy.userName}
+                </p>
+              </div>
             </Link>
           </div>
         </div>
@@ -74,14 +73,14 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
           <Link href={`/detail/${post._id}`}>
             <video
               loop
-              ref={vieoRef}
+              ref={videoRef}
               className="lg:w-[700px] lg:h-[530px]  md:h-[500px] md:w-[600px] h-[400px] w-[425px] rounded-2xl cursor-pointer"
               src={post.video.asset.url}
             ></video>
           </Link>
 
           <div className="flex items-center cursor-pointer gap-5 my-2 w-[70px] md:w-[100px] lg:justify-between">
-            {isPlaying ? (
+            {playing ? (
               <BsFillPauseFill
                 onClick={handlePlay}
                 className="text-black text-2xl lg:text-4xl md:text-3xl"
@@ -94,12 +93,12 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
             )}
             {isMuted ? (
               <HiVolumeOff
-                onClick={handleMute}
+                onClick={() => setIsMuted(false)}
                 className="text-black text-2xl lg:text-4xl md:text-3xl"
               />
             ) : (
               <HiVolumeUp
-                onClick={handleMute}
+                onClick={() => setIsMuted(true)}
                 className="text-black text-2xl lg:text-4xl md:text-3xl"
               />
             )}
