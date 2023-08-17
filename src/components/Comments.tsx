@@ -13,6 +13,7 @@ interface IProps {
     _key: string;
     postedBy: {
       _ref: string;
+      _id: string;
     };
   }[];
   setComment: React.Dispatch<React.SetStateAction<string>>;
@@ -29,12 +30,50 @@ const Comments = ({
   addComment,
   isPostingComment,
 }: IProps) => {
-  const userProfile = useSelector((state: AuthState) => state.userProfile);
+  const { userProfile, users } = useSelector((state: AuthState) => state);
   return (
     <div className="border-t-2 border-gray-200 pt-4 px-10 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">
       <div className="overflow-scroll lg:h-[475px]">
         {comments?.length ? (
-          <div> comments </div>
+          comments.map((comment, idx) => (
+            <>
+              {users.map(
+                (user) =>
+                  user._id ===
+                    (comment.postedBy._ref || comment.postedBy._id) && (
+                    <div key={user._id} className="p-2 items-center">
+                      <Link href={`/profile/${user._id}`}>
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8">
+                            <Image
+                              src={user.image}
+                              width={32}
+                              height={32}
+                              className="rounded-full"
+                              alt="ProfilePicture"
+                              style={{ width: '100%', height: '100%' }}
+                            />
+                          </div>
+
+                          <div className="hidden xl:block">
+                            <p className="flex gap-1 items-center text-lg font-bold text-primary lowercase">
+                              {user.userName.replaceAll(' ', '')}
+                              <GoVerified className="text-blue-400" />
+                            </p>
+                            <p className="capitalize text-gray-400 text-xs">
+                              {user.userName}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                      <div>
+                        <p>{comment.comment}</p>
+                      </div>
+                    </div>
+                  )
+              )}
+            </>
+          ))
         ) : (
           <NoResults text="No comments yet!" />
         )}

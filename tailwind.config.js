@@ -11,6 +11,9 @@ module.exports = {
         primary: '#F1F1F2',
         blur: '#030303',
       },
+      colors: {
+        primary: 'rgb(22, 24, 35)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
