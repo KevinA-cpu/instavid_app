@@ -65,7 +65,7 @@ const Detail = ({ postDetails }: { postDetails: Video }) => {
     e.preventDefault();
     setIsPostingComment(true);
     if (userProfile && comment) {
-      const { data } = await axios.post(`${BASE_URL}/api/post/${post._id}`, {
+      const { data } = await axios.put(`${BASE_URL}/api/posts/${post._id}`, {
         userId: userProfile._id,
         comment,
       });
