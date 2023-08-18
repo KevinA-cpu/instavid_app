@@ -141,8 +141,8 @@ const Detail = ({ postDetails }: { postDetails: Video }) => {
             <div>
               <Link href="/">
                 <div className="mt-3 flex flex-col gap-2">
-                  <p className="flex gap-2 items-center md:text-lg font-bold text-primary">
-                    {post.postedBy.userName}{' '}
+                  <p className="flex gap-2 items-center md:text-lg font-bold text-primary lowercase">
+                    {post.postedBy.userName.replaceAll(' ', '')}
                     <GoVerified className="text-blue-500 text-lg" />
                   </p>
                   <p className="-mt-1 capitalize font-medium text-xs text-gray-500 hidden md:block">
