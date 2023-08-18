@@ -140,7 +140,7 @@ const Upload = () => {
             type="text"
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
-            className="rounded outline-none text-lg border-2 border-gray-200 p-4 lg:p-4"
+            className="rounded outline-none text-lg border-2 border-gray-200 p-6 lg:p-8"
           />
           <label className="text-lg font-medium">Choose a Category</label>
           <select
