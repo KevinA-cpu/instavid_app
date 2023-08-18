@@ -68,6 +68,12 @@ const Upload = () => {
     }
   };
 
+  const handleDiscard = () => {
+    setSavingPost(false);
+    setVideoAsset(undefined);
+    setCaption('');
+  };
+
   return (
     <div className="flex h-full w-full absolute left-0 top-[78px] mb-10 pt-10 lg:pt-20 bg-white justify-center">
       <div className="bg-[#F8F8F8] rounded-lg xl:h-[80vh] w-[60%] flex gap-6 flex-wrap justify-between items-center p-14 pt-6">
@@ -153,7 +159,7 @@ const Upload = () => {
           </select>
           <div className="flex gap-6 mt-10">
             <button
-              onClick={() => {}}
+              onClick={handleDiscard}
               type="button"
               className="border-gray-300 border-2 text-lg font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
@@ -164,7 +170,7 @@ const Upload = () => {
               type="button"
               className="bg-[#E62725] text-white text-lg font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
-              Post
+              {savingPost ? 'Posting...' : 'Post'}
             </button>
           </div>
         </div>
