@@ -26,8 +26,8 @@ const SuggestedAccounts = () => {
               <div className="w-8 h-8">
                 <Image
                   src={user.image}
-                  width={32}
-                  height={32}
+                  width={34}
+                  height={34}
                   className="rounded-full"
                   alt="ProfilePicture"
                   style={{ width: '100%', height: '100%' }}
